@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -19,8 +20,10 @@ namespace client.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
+            var token = await HttpContext.GetTokenAsync("access_token");
+            ViewData["token"] = token;
             Console.WriteLine(User);
         }
     }
