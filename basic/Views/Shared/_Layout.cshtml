@@ -32,9 +32,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Admin">Admin</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Users">Users</a>
-                        </li>
+                
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="SecretLevel">SecretLevel</a>
                         </li>
@@ -42,6 +40,9 @@
                     <ul class="nav navbar-nav">
                         @if (this.User.Identity.IsAuthenticated)
                         {
+                            <li class="nav-item">
+                               @User.Identity.Name
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>

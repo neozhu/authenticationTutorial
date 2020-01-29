@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using basic.App_Start;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,10 +18,16 @@ namespace basic.Controllers
     public class HomeController : Controller
     {
         private readonly IAuthorizationService _authorizationService;
+        private readonly IOptions<AppSettings> _config;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(IAuthorizationService authorizationService)
+        public HomeController(IAuthorizationService authorizationService,
+            UserManager<IdentityUser> userManager,
+            IOptions<AppSettings> config )
         {
             _authorizationService = authorizationService;
+            _config = config;
+            _userManager = userManager;
         }
         [AllowAnonymous]
         // GET: /<controller>/
@@ -38,10 +49,11 @@ namespace basic.Controllers
         {
             return View();
         }
-        [Authorize(Roles = "users")]
-        public IActionResult Users()
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Users()
         {
-            return View();
+            var users = await this._userManager.Users.ToListAsync();
+            return Ok(users);
         }
         [SecurityLevel(5)]
         public IActionResult SecretLevel()

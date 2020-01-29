@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using basic.App_Start;
 using basic.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace basic
 {
@@ -32,6 +35,8 @@ namespace basic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
             services.AddDbContext<StoreDbContext>(config =>
             {
                 config.UseInMemoryDatabase("db");
@@ -52,14 +57,45 @@ namespace basic
                 config.Cookie.Name = CookieAuthenticationDefaults.AuthenticationScheme;
                 config.ExpireTimeSpan = TimeSpan.FromDays(30);
             });
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(config=> {
+
+                config.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config =>
                 {
                     config.ExpireTimeSpan = TimeSpan.FromDays(30);
                     config.Cookie.Name = CookieAuthenticationDefaults.AuthenticationScheme;
                     config.LoginPath = "/Account/Login";
                     config.EventsType = typeof(CustomCookieAuthenticationEvents);
-                });
+                })
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, config => {
+                    
+                    config.RequireHttpsMetadata = false;
+                    config.SaveToken = true;
+                    config.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                    config.Events = new JwtBearerEvents()
+                    {
+                        OnMessageReceived = context =>
+                        {
+
+                            if (context.Request.Query.ContainsKey("access_token"))
+                            {
+                                context.Token = context.Request.Query["access_token"];
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
+                })
+                ;
             services.AddAuthorization(config=> {
                 //var defaultAuthbuilder = new AuthorizationPolicyBuilder();
                 //var defaultAuthPolicy = defaultAuthbuilder
