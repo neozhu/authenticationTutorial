@@ -101,6 +101,11 @@ namespace basic.App_Start
             {
                 ((ClaimsIdentity)principal.Identity).AddClaim(new Claim("Friend", "Normal"));
             }
+            var hasSecurityLevel = principal.Claims.Any(x => x.Type == DynamicPilicies.SecurityLevel);
+            if (!hasSecurityLevel)
+            {
+                ((ClaimsIdentity)principal.Identity).AddClaim(new Claim(DynamicPilicies.SecurityLevel, "10"));
+            }
             return Task.FromResult(principal);
         }
     }

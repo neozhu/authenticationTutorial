@@ -43,6 +43,11 @@ namespace basic.Controllers
         {
             return View();
         }
+        [SecurityLevel(5)]
+        public IActionResult SecretLevel()
+        {
+            return View();
+        }
         public async Task<IActionResult> DoStuff() {
             //var defaultAuthbuilder = new AuthorizationPolicyBuilder();
             //var defaultAuthPolicy = defaultAuthbuilder

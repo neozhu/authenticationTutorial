@@ -98,6 +98,8 @@ namespace basic
                     policyBuilder.RequireClaim("ToDo");
                 });
             });
+            services.AddSingleton<IAuthorizationPolicyProvider, CustomAuthorizationPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, SecurityLevelHandler>();
             services.AddScoped<CustomCookieAuthenticationEvents>();
             services.AddScoped<IAuthorizationHandler, CustomRequireClaimHandler>();
             services.AddScoped<IAuthorizationHandler, CookieJarAuthizationHandler>();
