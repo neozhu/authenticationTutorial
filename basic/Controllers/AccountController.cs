@@ -9,10 +9,12 @@ using basic.App_Start;
 using basic.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -140,6 +142,87 @@ namespace basic.Controllers
                 }
             }
             return Ok();
+        }
+
+
+        [HttpGet]
+        public IActionResult OAuth_Login(
+            OAuthRequest request
+            /*string response_type, // authorization flow type 
+            string client_id, // client id
+            string redirect_uri,
+            string scope, // what info I want = email,grandma,tel
+            string state*/
+            ) {
+            //var query = new QueryBuilder();
+            //query.Add("redirectUri", request.Redirect_Uri);
+            //query.Add("state", request.State);
+            var loginViewModel = new OAuthLoginViewModel()
+            {
+                RedirectUri = request.Redirect_Uri,
+                State = request.State
+            };
+            return View(model: loginViewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> OAuth_Login(OAuthLoginViewModel viewModel)
+        {
+
+            var user = await this._userManager.FindByEmailAsync(viewModel.Email);
+            if (user != null)
+            {
+                var result = await this._signInManager.CheckPasswordSignInAsync(user, viewModel.Password, false);
+                if (result.Succeeded)
+                {
+                    var query = new QueryBuilder();
+                    query.Add("code", user.Id);
+                    query.Add("state", viewModel.State);
+                    return Redirect($"{viewModel.RedirectUri}{query.ToString()}");
+                }
+            }
+            return View();
+        }
+        public async Task<IActionResult> OAuth_Token(
+            TokenRequest request
+            /*string grant_type, // flow of access_token request
+            string code, // confirmation of the authentication process
+            string redirect_uri,
+            string client_id,
+            string refresh_token*/)
+        {
+
+            var user = await this._userManager.FindByIdAsync(request.Code);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                //    Subject = new ClaimsIdentity(new Claim[]
+                //    {
+                //new Claim(ClaimTypes.Name, user.Id.ToString())
+                //    }),
+                Subject = new ClaimsIdentity(await _userManager.GetClaimsAsync(user)),
+                Expires = DateTime.UtcNow.AddDays(30),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            var access_token = tokenHandler.WriteToken(token);
+
+            var responseObject = new
+            {
+                access_token,
+                token_type = "Bearer",
+                raw_claim = "oauthTutorial",
+                refresh_token = "RefreshTokenSampleValueSomething"
+            };
+
+            var responseJson = JsonConvert.SerializeObject(responseObject);
+            var responseBytes = Encoding.UTF8.GetBytes(responseJson);
+
+            await Response.Body.WriteAsync(responseBytes, 0, responseBytes.Length);
+
+            return Redirect(request.Redirect_Uri);
+            
         }
     }
 }

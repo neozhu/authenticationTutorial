@@ -62,6 +62,7 @@ namespace basic
             services.AddAuthentication(config=> {
 
                 config.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                config.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config =>
