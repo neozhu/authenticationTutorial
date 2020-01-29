@@ -222,7 +222,6 @@ namespace basic.Controllers
             await Response.Body.WriteAsync(responseBytes, 0, responseBytes.Length);
 
             return Redirect(request.Redirect_Uri);
-            
         }
     }
 }

@@ -42,8 +42,8 @@ namespace client
                     config.ClientId = "client_id";
                     config.ClientSecret = "client_secret";
                     config.CallbackPath = new PathString("/oauth/callback");
-                    config.AuthorizationEndpoint = "http://localhost:5000/account/oauth_login";
-                    config.TokenEndpoint = "http://localhost:5000/account/oauth_token";
+                    config.AuthorizationEndpoint = "https://localhost:5001/account/oauth_login";
+                    config.TokenEndpoint = "https://localhost:5001/account/oauth_token";
                     config.SaveTokens = true;
 
                     config.Events = new OAuthEvents()
@@ -68,7 +68,7 @@ namespace client
 
             services.AddHttpClient();
             services.AddRazorPages();
-            services.AddControllersWithViews();
+            //services.AddControllersWithViews();
               
         }
 

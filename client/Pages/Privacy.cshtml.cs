@@ -21,6 +21,7 @@ namespace client.Pages
 
         public void OnGet()
         {
+            Console.WriteLine(User);
         }
     }
 }
