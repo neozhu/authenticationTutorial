@@ -1,0 +1,86 @@
+﻿@page
+@{
+}
+<style>
+
+
+    .card-header {
+        padding: 5px 15px;
+    }
+
+    .profile-img {
+        width: 96px;
+        height: 96px;
+        margin: 0 auto 10px;
+        display: block;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+    }
+    </style>
+
+    <div class="">
+        <div class="container d-flex justify-content-center">
+            <div class="row">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Register</strong>
+                    </div>
+                    <div class="card-body">
+                        <form action="Register" method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="profile-img">
+                                        <i class='fas fa-user-circle' style='font-size:120px'></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <hr> <!-- other content  -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class='fas fa-user-shield'></i>
+                                                </span>
+                                            </div>
+                                            <input class="form-control" placeholder="Email" id="Email" name="Email" type="email" autofocus>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class='fas fa-user-secret'></i>
+                                                </span>
+                                            </div>
+                                            <input class="form-control" placeholder="Password" id="Password" name="Password" type="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class='fas fa-user-secret'></i>
+                                                </span>
+                                            </div>
+                                            <input class="form-control" placeholder="Confirm Password" id="ConfirmPassword" name="ConfirmPassword" type="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-lg btn-success btn-block submit" value="Sign up">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <a href="#" onClick="">I forgot my password!</a> -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

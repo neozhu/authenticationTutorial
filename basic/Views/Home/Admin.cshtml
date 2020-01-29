@@ -1,0 +1,23 @@
+﻿@page
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizeService
+@{
+}
+
+    <div class="card" style="width: 18rem;">
+        <img src="https://via.placeholder.com/280x160.png" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            @if ((await authorizeService.AuthorizeAsync(User, "admin")).Succeeded)
+            {
+                <a href="#" class="btn btn-primary">To Do</a>
+            }
+            else
+            {
+                <a href="#"  class="btn btn-default">Show Detail</a>
+            }
+
+        </div>
+    </div>
+
