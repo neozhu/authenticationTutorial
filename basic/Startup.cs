@@ -57,8 +57,7 @@ namespace basic
                 config.Cookie.Name = CookieAuthenticationDefaults.AuthenticationScheme;
                 config.ExpireTimeSpan = TimeSpan.FromDays(30);
             });
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            
             services.AddAuthentication(config=> {
 
                 config.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -73,15 +72,18 @@ namespace basic
                     config.EventsType = typeof(CustomCookieAuthenticationEvents);
                 })
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, config => {
-                    
+                    var appSettings = appSettingsSection.Get<AppSettings>();
+                    var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
                     config.RequireHttpsMetadata = false;
                     config.SaveToken = true;
                     config.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidIssuer = appSettings.Issuer,
+                        ValidAudience = appSettings.Audiance,
+                       
                     };
                     config.Events = new JwtBearerEvents()
                     {

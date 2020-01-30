@@ -8,5 +8,7 @@ namespace basic.App_Start
             
     }
         public string Secret { get; set; }
+        public string Issuer { get; set; }
+        public string Audiance { get; set; }
     }
 }

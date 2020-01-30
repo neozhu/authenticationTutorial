@@ -131,6 +131,8 @@ namespace basic.Controllers
                         //    {
                         //new Claim(ClaimTypes.Name, user.Id.ToString())
                         //    }),
+                        Issuer = _appSettings.Issuer,
+                        Audience = _appSettings.Audiance,
                         Subject = new ClaimsIdentity(await _userManager.GetClaimsAsync(user)),
                         Expires = DateTime.UtcNow.AddDays(30),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -201,6 +203,8 @@ namespace basic.Controllers
                 //new Claim(ClaimTypes.Name, user.Id.ToString())
                 //    }),
                 Subject = new ClaimsIdentity(await _userManager.GetClaimsAsync(user)),
+                 Issuer=_appSettings.Issuer,
+                  Audience=_appSettings.Audiance,
                 Expires = DateTime.UtcNow.AddDays(30),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
