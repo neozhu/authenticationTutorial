@@ -48,6 +48,7 @@ namespace webclient.Pages
             var content = await response.Content.ReadAsStringAsync();
             ViewData["data"] = content;
             ViewData["token"] = tokenResponse.AccessToken;
+
         }
     }
 }

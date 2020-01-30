@@ -21,5 +21,8 @@ namespace identityserver.Pages
         {
 
         }
+        public void OnPost() {
+
+        }
     }
 }
