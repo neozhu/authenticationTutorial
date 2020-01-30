@@ -94,6 +94,7 @@ namespace identityserver
                                    "client_secret".ToSha256() )
                            },
                             RedirectUris={"https://localhost:5004/signin-oidc"},
+                            PostLogoutRedirectUris = { "https://localhost:5004/signout-callback-oidc" },
                             AllowedGrantTypes=GrantTypes.Code,
                             AllowedScopes={"webapi",
                                "webclient",
