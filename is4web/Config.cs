@@ -45,13 +45,13 @@ namespace is4web
                     ClientId = "mvc",
                     ClientName = "MVC Client",
 
-                    AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
+                    AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
 
-                    RedirectUris = { "http://localhost:5003/signin-oidc" },
-                    FrontChannelLogoutUri = "http://localhost:5003/signout-oidc",
-                    PostLogoutRedirectUris = { "http://localhost:5003/signout-callback-oidc" },
+                    RedirectUris = { "http://localhost:5008/signin-oidc" },
+                    FrontChannelLogoutUri = "http://localhost:5008/signout-oidc",
+                    PostLogoutRedirectUris = { "http://localhost:5008/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
                     AllowedScopes = { "openid", "profile", "api1" }

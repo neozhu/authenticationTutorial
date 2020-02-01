@@ -6,7 +6,7 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'SelfHost' ">
     <StartAction>Project</StartAction>
-    <ApplicationURL>http://localhost:5008</ApplicationURL>
+    <ApplicationURL>http://localhost:5002</ApplicationURL>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="3.0.1" />

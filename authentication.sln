@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webclient", "webclient\webc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "is4web", "is4web\is4web.csproj", "{6A960AEA-5E35-4E2E-8A9B-6963AC5F17FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mvcclient", "mvcclient\mvcclient.csproj", "{A6D6C4E7-E34D-48BE-BE09-F2C3037DBA4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,5 +45,9 @@ Global
 		{6A960AEA-5E35-4E2E-8A9B-6963AC5F17FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A960AEA-5E35-4E2E-8A9B-6963AC5F17FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A960AEA-5E35-4E2E-8A9B-6963AC5F17FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6D6C4E7-E34D-48BE-BE09-F2C3037DBA4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6D6C4E7-E34D-48BE-BE09-F2C3037DBA4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6D6C4E7-E34D-48BE-BE09-F2C3037DBA4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6D6C4E7-E34D-48BE-BE09-F2C3037DBA4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

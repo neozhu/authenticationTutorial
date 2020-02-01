@@ -71,8 +71,8 @@ namespace is4web
                     // register your IdentityServer with Google at https://console.developers.google.com
                     // enable the Google+ API
                     // set the redirect URI to http://localhost:5000/signin-google
-                    options.ClientId = "copy client ID from Google here";
-                    options.ClientSecret = "copy client secret from Google here";
+                    options.ClientId = "485351712806-csdf76tmhmqnutjo35bcm2vpvfkq5m05.apps.googleusercontent.com";
+                    options.ClientSecret = "QBKQXPh1DqOJi5SZ3ESmQk_j";
                 });
         }
 
